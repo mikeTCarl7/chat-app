@@ -4,9 +4,9 @@ function createLightTheme(): Theme {
     return createMuiTheme({
         palette: {
             primary: {
-                main: "rgba(33, 104, 245)",
+                main: "rgba(235,23,1)",
                 dark: "rgba(0, 52, 184)",
-                light: "rgba(33, 104, 245, .5)",
+                light: "rgba(235,23,1, .5)",
             },
             secondary: {
                 main: "rgba(98, 8, 168)",

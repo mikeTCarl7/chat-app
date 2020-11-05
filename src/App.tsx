@@ -55,6 +55,8 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function PermanentDrawerLeft() {
   const classes = useStyles();
   const [rooms, setRooms] = useState([]);
+  const [loggedInUser, setLoggedInUser] = useState('');
+
 
   const getRooms = async () => {
     const rooms = await axios.get(`/rooms`); // TODO romove axios : no need for axios as we don't need support of older browsers and we aren't concerned with setting timeout params and things of that nature
@@ -62,6 +64,7 @@ export default function PermanentDrawerLeft() {
   }
   // Get chatRooms on load
   useEffect(() => {
+    setLoggedInUser("Mike");
     getRooms();
   }, []);
 
@@ -108,7 +111,7 @@ export default function PermanentDrawerLeft() {
         <div className={classes.toolbar} />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path='/rooms/:id' render={routerProps => <RenderChatRoom props={routerProps} />} />
+          <Route path='/rooms/:id' render={routerProps => <RenderChatRoom routerProperties={routerProps} currentUser={loggedInUser} />} />
           <Route exact path="/about">
             <div>about</div>
           </Route>
