@@ -11,49 +11,22 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import RenderChatRoom from "./chatRoom"
+import RenderChatRoom from './chatRoom';
+import useStyles from './styles';
 
 import {
   Link,
   Switch,
   Route,
 } from 'react-router-dom';
-import { render } from '@testing-library/react';
 
 const Home = () => <div>
   <li>Browser</li><li>Runs on local machine</li><li>React renders user interface</li><li>React Router adds clickable links</li>
 </div>
 
-const drawerWidth = 240;
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-    },
-    appBar: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-    },
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-    drawerPaper: {
-      width: drawerWidth,
-    },
-    // necessary for content to be below app bar
-    toolbar: theme.mixins.toolbar,
-    content: {
-      flexGrow: 1,
-      backgroundColor: theme.palette.background.default,
-      padding: theme.spacing(3),
-    },
-  }),
-);
-
-export default function PermanentDrawerLeft() {
-  const classes = useStyles();
+ const PermanentDrawerLeft = ({match}) => {
+  const classes = useStyles({});
   const [rooms, setRooms] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState('');
 
@@ -95,8 +68,9 @@ export default function PermanentDrawerLeft() {
         <div>
           <List>
             {rooms.map((room: any) => {
+              console.log('match: ', match);
               const { id, name } = room;
-              return <ListItem component={Link} to={`/rooms/${id}`} button key={id}>
+              return <ListItem component={Link} to={`${match.url}/${id}`} button key={id}>
                 <ListItemText primary={name} />
               </ListItem>
             })}
@@ -110,13 +84,12 @@ export default function PermanentDrawerLeft() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path='/rooms/:id' render={routerProps => <RenderChatRoom routerProperties={routerProps} currentUser={loggedInUser} />} />
-          <Route exact path="/about">
-            <div>about</div>
-          </Route>
+          {/* <Route exact path="/" component={Home} /> */}
+          <Route path={`${match.path}/:id`} render={routerProps => <RenderChatRoom routerProperties={routerProps} currentUser={loggedInUser} />} />
         </Switch>
       </main>
     </div>
   );
 }
+
+export default PermanentDrawerLeft

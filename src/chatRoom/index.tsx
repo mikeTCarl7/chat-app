@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import axios from "axios";
+import axios from 'axios';
 import { List, ListItem, ListItemText, TextField, Button } from '@material-ui/core'; //SEE IF THIS IS OVER IMPORTING
-
+import useStyles from './styles';
 const ChatRoom = ({ routerProperties, currentUser }: any) => {
+    const classes = useStyles({});
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState(""); // Message to send
 
     const { match: { params: id } } = routerProperties;
     const getMessagesByRoom = async () => {
-        const response = await axios.get(`/rooms/${id.id}/messages`)
+        const response = await axios.get(`/rooms/${id.id}/messages`);
         setMessages(response.data);
         console.log('messages', response.data);
     }
@@ -24,7 +25,6 @@ const ChatRoom = ({ routerProperties, currentUser }: any) => {
 
     const handleSendMessage = async () => {
         // send message
-
         setNewMessage('');
         const requestOptions = {
             method: 'POST',
@@ -44,22 +44,27 @@ const ChatRoom = ({ routerProperties, currentUser }: any) => {
         <>
             <List>
                 {messages.map((item: any) => {
-                    return <ListItem selected={item.name===currentUser} key={item.id}>
+                    return <ListItem selected={item.name === currentUser} key={item.id}>
                         <ListItemText primary={item.message} />
                     </ListItem>
                 })}
             </List>
-            <TextField
-                value={newMessage}
-                variant={"outlined"}
-                onChange={handleMessageChange}
-                onKeyDown={handlePressKey}
-                placeholder="Write message..."
-                className="new-message-input-field"
-            />
-            <Button onClick={handleSendMessage} className="send-message-button">
-                Send
-  </Button>
+            <div className={classes.footer}>
+                <div className={classes.messageInputWrapper}>
+                    <TextField
+                        value={newMessage}
+                        variant={"outlined"}
+                        onChange={handleMessageChange}
+                        onKeyDown={handlePressKey}
+                        placeholder="Write message..."
+                        className={classes.messageInput}
+                    />
+                    <Button onClick={handleSendMessage} size={"large"} className={classes.sendButton}>
+                        Send
+            </Button>
+                </div>
+            </div>
+
         </>
     )
 }
