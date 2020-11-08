@@ -65,7 +65,7 @@ const Login = () => {
           // className={classes.messageInput}
         />
         <Button onClick={handleSetUserName} component={Link} to="/rooms" size={"large"} >
-          Send
+          Enter Chat Room
 </Button>
       </div>
     </div>
@@ -81,10 +81,6 @@ ReactDOM.render(
             <Route path="/rooms" component={App}>
             </Route>
             <Route exact path="/" component={Login} />
-            {/* <Route path='/rooms/:id' render={routerProps => <RenderChatRoom routerProperties={routerProps} currentUser={"Mike"} />} /> */}
-            <Route exact path="/about">
-              <div>about</div>
-            </Route>
           </Switch>
         </MuiThemeProvider>
       </Router>

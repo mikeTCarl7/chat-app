@@ -3,7 +3,6 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core';
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
         marginTop: theme.spacing(6),
-        // maxHeight: 500,
         overflow: "scroll",
         scrollBehavior: "smooth",
     },

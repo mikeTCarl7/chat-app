@@ -29,18 +29,6 @@ function RenderUsers(users, styles) {
     )
 }
 
-
-// <Typography variant="h6" noWrap>
-//                         {roomDetails.name}
-//                         </Typography>
-//                         <Typography variant="h6" noWrap>
-//                         {roomDetails.users[0]}
-//                         </Typography>
-//                         <Typography variant="h6" noWrap>
-//                         {roomDetails.users[1]}
-//                         </Typography>
-//                 </Toolbar >
-
 const ChatRoom = ({ routerProperties, currentUser }: Props) => {
     const classes = useStyles({});
     const [messages, setMessages] = useState([]);
@@ -69,11 +57,10 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
     useEffect(() => {
         let isMounted = true; // note this flag denote mount status
         getRoomDetails();
-        getMessages();
-        setTimeout(() => {
-        // scrollToBottom();
-        }, 10)
-        return () => { isMounted = false }; // unmount
+        getMessages();// TODO figure out if this is fireing all thetime
+        var timer = setInterval(()=> getMessages(), 1000);
+
+        return () => { clearInterval(timer); timer=null; isMounted = false }; // unmount
     }, [routerProperties]);
 
 

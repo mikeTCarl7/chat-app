@@ -79,10 +79,6 @@ if (!rooms) {
             })}
           </List>
         </div>
-        <ul role="nav">
-          <li><Link to="/about">about</Link></li>
-          <li><Link to="/">home</Link></li>
-        </ul>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
