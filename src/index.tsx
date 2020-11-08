@@ -28,7 +28,7 @@ ReactDOM.render(
           </Route>
           <Route path="/rooms" component={App}>
           </Route>
-          {/* <Route exact path="/" component={Home} /> */}
+          <Route exact path="/" component={Bah} />
           {/* <Route path='/rooms/:id' render={routerProps => <RenderChatRoom routerProperties={routerProps} currentUser={"Mike"} />} /> */}
           <Route exact path="/about">
             <div>about</div>

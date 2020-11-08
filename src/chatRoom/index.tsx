@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,6 +7,8 @@ import { List, ListItem, ListItemText, TextField, Button } from '@material-ui/co
 import useStyles from './styles';
 import { Room, Message, InCommingMessage } from '../shared/types'
 import userEvent from '@testing-library/user-event';
+import classNames from 'classnames';
+
 
 interface Props {
     routerProperties: any,
@@ -15,19 +17,14 @@ interface Props {
 
 function RenderUsers(users, styles) {
 
-    // if(!users) return null
     console.log(users);
     return (
         <div className={styles.users}>
-            {/* dfsdfasdfasd */}
             {users.map((user) => {
-                return <Typography variant="h6" noWrap>
+                return <Typography className={styles.headerItem} variant="h6" noWrap>
                     {user}
                 </Typography>
             })}
-            {/* <Typography variant="h6" noWrap>
-                    {users[0]}
-                </Typography> */}
         </div>
     )
 }
@@ -49,6 +46,7 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
     const [roomDetails, setRoomDetails] = useState<Room | undefined>();
 
     const [newMessage, setNewMessage] = useState(""); // Message to send
+    const messagesEndRef = useRef(null) // for dummy div at bottom of message list so we can scroll to bottom when new messages come in
 
     const { match: { params: id } } = routerProperties;
     const getMessages = async () => {
@@ -65,11 +63,20 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
         console.log('messages', response.data);
     }
 
+    const scrollToBottom = () => {
+        // @ts-ignore
+        messagesEndRef && messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+    }
+
+
     useEffect(() => {
         let isMounted = true; // note this flag denote mount status
-
         getRoomDetails();
         getMessages();
+        setTimeout(()=>{
+
+            scrollToBottom();
+        }, 0)
         return () => { isMounted = false };
     }, [routerProperties]);
 
@@ -86,6 +93,7 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
             body: JSON.stringify({ name: currentUser, message: newMessage })
         };
         await fetch(`/rooms/${id.id}/messages`, requestOptions).then(() => getMessages());
+        scrollToBottom();
     }
 
     const handlePressKey = (e) => {
@@ -102,21 +110,24 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
         // <div className={classes.root}>
         <>
             <AppBar position="fixed" className={classes.appBar}>
-                 {/* TODO remove tool bar SEPORATOR */}
+                {/* TODO remove tool bar SEPORATOR */}
                 <Toolbar className={classes.toolbar} classes={{ root: classes.toolbarSeparator }}>
-                    <Typography variant="h6" noWrap>
+                    <Typography className={classes.headerItem} variant="h5" noWrap>
                         {roomDetails.name}
                     </Typography>
-                    {RenderUsers(roomDetails.users, classes)}                
-                    </Toolbar>
+                    {RenderUsers(roomDetails.users, classes)}
+                </Toolbar>
             </AppBar>
-            <List>
+            <List className={classes.messageList}>
                 {messages.map((item: any) => {
-                    return <ListItem selected={item.name === currentUser} key={item.id}>
-                        <ListItemText primary={item.message} />
+                    const isMyMessage = item.name === currentUser;
+                    return <ListItem id="messageList" key={item.id}>
+                        <ListItemText className={classNames(isMyMessage ? classes.myMessage : classes.otherMessage, classes.message)} primary={item.message} />
                     </ListItem>
                 })}
             </List>
+                  <div style={{paddingBottom: 120}} ref={messagesEndRef} />
+
             <div className={classes.footer}>
                 <div className={classes.messageInputWrapper}>
                     <TextField

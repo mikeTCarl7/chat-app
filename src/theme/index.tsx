@@ -41,7 +41,7 @@ function createLightTheme(): Theme {
             },
         },
         shape: {
-            borderRadius: 4,
+            borderRadius: 8,
         },
     });
 }

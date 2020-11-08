@@ -10,6 +10,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         width: `calc(100% - ${drawerWidth}px)`,
         marginLeft: drawerWidth,
         alignItems: "center",
+        background: theme.palette.background.paper,
+        color: theme.palette.getContrastText(theme.palette.background.default)
 
         // padding: theme.spacing(3)
     },
@@ -17,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         position: "fixed",
         width: `calc(100% - ${drawerWidth}px)`,
         bottom: 0,
+        zIndex: 2
     },
     messageInput: {
         // flexDirection: "column",
@@ -29,6 +32,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         alignItems: "center",
         boxShadow: theme.shadows[3],
     },
+    messageList: {
+        marginTop: theme.spacing(6)
+    },
     sendButton: {
         // flexDirection: "column",
         padding: theme.spacing(2),
@@ -37,12 +43,34 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     // needed for chat content to be below bar
     toolbarSeparator: theme.mixins.toolbar,
     toolbar: {
-        flexDirection: "column"
+        flexDirection: "column",
+        padding: theme.spacing(1)
     },
     users: {
         display: "flex",
-        flexDirection: "row"
-    }
+        flexDirection: "row",
+    },
+    headerItem: {
+        margin: theme.spacing(1),
+    },
+    message: {
+        flexGrow: 0,
+        padding: theme.spacing(1),
+        borderRadius: theme.shape.borderRadius
+    },
+    myMessage: {
+        textAlign: "end",
+        marginLeft: "auto",
+        background: theme.palette.primary.main,
+        color: theme.palette.getContrastText(theme.palette.primary.main)
+    },
+    otherMessage: {
+        marginRight: "auto",
+        background: theme.palette.background.paper,
+        color: theme.palette.getContrastText(theme.palette.background.paper)
+    },
+
+
 }));
 
 export default useStyles;
