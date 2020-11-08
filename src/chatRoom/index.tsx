@@ -47,7 +47,6 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
     const [roomDetails, setRoomDetails] = useState<Room | undefined>();
 
     const [newMessage, setNewMessage] = useState(""); // Message to send
-    const messagesEndRef = useRef(null) // for dummy div at bottom of message list so we can scroll to bottom when new messages come in
 
     const { match: { params: id } } = routerProperties;
     const getMessages = async () => {
@@ -65,21 +64,16 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
         console.log('messages', response.data);
     }
 
-    const scrollToBottom = () => {
-        // @ts-ignore
-        messagesEndRef && messagesEndRef.current.scrollIntoView();
-    }
 
 
     useEffect(() => {
         let isMounted = true; // note this flag denote mount status
         getRoomDetails();
         getMessages();
-        console.log(currentUser)
         setTimeout(() => {
         // scrollToBottom();
         }, 10)
-        return () => { isMounted = false };
+        return () => { isMounted = false }; // unmount
     }, [routerProperties]);
 
 
@@ -132,7 +126,6 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
                 })}
             </List> */}
             <Messages messages={messages} currentUser={currentUser} />
-            <div style={{ paddingBottom: 120 }} ref={messagesEndRef} />
 
             <div className={classes.footer}>
                 <div className={classes.messageInputWrapper}>
@@ -150,8 +143,6 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
                 </div>
             </div>
         </div>
-
-        
     )
 }
 
