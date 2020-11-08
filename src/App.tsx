@@ -26,7 +26,8 @@ const Home = () => <div>
  const PermanentDrawerLeft = ({match}) => {
   const classes = useStyles({});
   const [rooms, setRooms] = useState([]);
-  const [loggedInUser, setLoggedInUser] = useState('');
+  const userName = sessionStorage.getItem('userName')
+  const [loggedInUser, setLoggedInUser] = useState(userName);
   const location = useLocation();
 
 
@@ -38,7 +39,8 @@ const Home = () => <div>
   // Get chatRooms on load
   useEffect(() => {
     // console.log('called useEffect')
-    setLoggedInUser("Mike");
+    setLoggedInUser(sessionStorage.getItem('userName'));
+    console.log(loggedInUser);
     getRooms();
   }, []);
 //  const handleRouteClick = (e)=>{
@@ -85,7 +87,7 @@ if (!rooms) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Switch>
-          <Route path={`${match.path}/:id`} render={(routerProps: RouteProps) => <RenderChatRoom routerProperties={routerProps} currentUser={loggedInUser} />} />
+          <Route path={`${match.path}/:id`} render={(routerProps) => <RenderChatRoom routerProperties={routerProps} currentUser={loggedInUser} />} />
         </Switch>
       </main>
     </div>

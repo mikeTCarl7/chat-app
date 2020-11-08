@@ -8,7 +8,7 @@ import useStyles from './styles';
 import { Room, Message, InCommingMessage } from '../shared/types'
 import userEvent from '@testing-library/user-event';
 import classNames from 'classnames';
-
+import Messages from "../messages"
 
 interface Props {
     routerProperties: any,
@@ -28,6 +28,7 @@ function RenderUsers(users, styles) {
         </div>
     )
 }
+
 
 // <Typography variant="h6" noWrap>
 //                         {roomDetails.name}
@@ -52,6 +53,7 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
     const getMessages = async () => {
         // consider using fetch instead
         const response = await axios.get(`/rooms/${id.id}/messages`);
+        console.log(response.data);
         setMessages(response.data);
         console.log('messages', response.data);
     }
@@ -65,7 +67,7 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
 
     const scrollToBottom = () => {
         // @ts-ignore
-        messagesEndRef && messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+        messagesEndRef && messagesEndRef.current.scrollIntoView();
     }
 
 
@@ -73,12 +75,13 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
         let isMounted = true; // note this flag denote mount status
         getRoomDetails();
         getMessages();
-        setTimeout(()=>{
-
-            scrollToBottom();
-        }, 0)
+        console.log(currentUser)
+        setTimeout(() => {
+        // scrollToBottom();
+        }, 10)
         return () => { isMounted = false };
     }, [routerProperties]);
+
 
     const handleMessageChange = (e) => {
         setNewMessage(e.target.value);
@@ -92,8 +95,8 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name: currentUser, message: newMessage })
         };
-        await fetch(`/rooms/${id.id}/messages`, requestOptions).then(() => getMessages());
-        scrollToBottom();
+        await fetch(`/rooms/${id.id}/messages`, requestOptions).then(() => getMessages()).then(() => getRoomDetails());
+        // scrollToBottom();
     }
 
     const handlePressKey = (e) => {
@@ -108,7 +111,9 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
 
     return (
         // <div className={classes.root}>
-        <>
+        <div className={classes.root}>
+
+        
             <AppBar position="fixed" className={classes.appBar}>
                 {/* TODO remove tool bar SEPORATOR */}
                 <Toolbar className={classes.toolbar} classes={{ root: classes.toolbarSeparator }}>
@@ -118,15 +123,16 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
                     {RenderUsers(roomDetails.users, classes)}
                 </Toolbar>
             </AppBar>
-            <List className={classes.messageList}>
+            {/* <List className={classes.messageList}>
                 {messages.map((item: any) => {
                     const isMyMessage = item.name === currentUser;
                     return <ListItem id="messageList" key={item.id}>
                         <ListItemText className={classNames(isMyMessage ? classes.myMessage : classes.otherMessage, classes.message)} primary={item.message} />
                     </ListItem>
                 })}
-            </List>
-                  <div style={{paddingBottom: 120}} ref={messagesEndRef} />
+            </List> */}
+            <Messages messages={messages} currentUser={currentUser} />
+            <div style={{ paddingBottom: 120 }} ref={messagesEndRef} />
 
             <div className={classes.footer}>
                 <div className={classes.messageInputWrapper}>
@@ -143,8 +149,9 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
             </Button>
                 </div>
             </div>
+        </div>
 
-        </>
+        
     )
 }
 

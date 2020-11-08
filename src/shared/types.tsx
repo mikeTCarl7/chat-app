@@ -10,6 +10,6 @@ export interface Room {
     reaction?: any;
 }
  
- export interface InCommingMessage extends Message {
+ export interface PostedMessage extends Message {
     id: string;
 }

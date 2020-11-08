@@ -4,7 +4,8 @@ import { drawerWidth } from '../styles';
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        overflow: 'hidden'
     },
     appBar: {
         width: `calc(100% - ${drawerWidth}px)`,
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         position: "fixed",
         width: `calc(100% - ${drawerWidth}px)`,
         bottom: 0,
-        zIndex: 2
+        clear: "both"
     },
     messageInput: {
         // flexDirection: "column",
@@ -33,7 +34,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         boxShadow: theme.shadows[3],
     },
     messageList: {
-        marginTop: theme.spacing(6)
+        marginTop: theme.spacing(6),
+        maxHeight: 1100,
+        overflow: "scroll",
+        scrollBehavior: "smooth",
     },
     sendButton: {
         // flexDirection: "column",
@@ -69,8 +73,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         background: theme.palette.background.paper,
         color: theme.palette.getContrastText(theme.palette.background.paper)
     },
-
-
 }));
 
 export default useStyles;
