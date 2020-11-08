@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import RenderChatRoom from './chatRoom';
 import useStyles from './styles';
+import { useLocation } from 'react-router-dom'
+
 
 import {
   Link,
   Switch,
   Route,
+  RouteProps
 } from 'react-router-dom';
 
 const Home = () => <div>
@@ -29,6 +27,8 @@ const Home = () => <div>
   const classes = useStyles({});
   const [rooms, setRooms] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState('');
+  const location = useLocation();
+
 
 
   const getRooms = async () => {
@@ -37,28 +37,26 @@ const Home = () => <div>
   }
   // Get chatRooms on load
   useEffect(() => {
+    // console.log('called useEffect')
     setLoggedInUser("Mike");
     getRooms();
   }, []);
+//  const handleRouteClick = (e)=>{
+//    const location = useLocation();
+//    setLocation(location);
+//  }
 
-
-  if (!rooms) {
-    return <div>Something went wrong</div>;
-  }
+if (!rooms) {
+  return <div>Something went wrong</div>;
+}
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" noWrap>
-            Dash Chat          </Typography>
-        </Toolbar>
-      </AppBar>
+
       <Drawer
-        className={classes.drawer}
         variant="permanent"
         classes={{
+          root: classes.drawer,
           paper: classes.drawerPaper,
         }}
         anchor="left"
@@ -68,9 +66,12 @@ const Home = () => <div>
         <div>
           <List>
             {rooms.map((room: any) => {
-              console.log('match: ', match);
-              const { id, name } = room;
-              return <ListItem component={Link} to={`${match.url}/${id}`} button key={id}>
+              console.log('room: ', room.name);
+              console.log('id: ', room.id);
+
+              console.log('location/path/:id ', location.pathname.split('/')[2])
+              const { id, name } = room; // TODO come up with a more elegant way of handling this path comparison
+              return <ListItem component={Link} selected={location.pathname.split('/')[2]==id} to={`${match.url}/${id}`} button key={id}>
                 <ListItemText primary={name} />
               </ListItem>
             })}
@@ -84,8 +85,7 @@ const Home = () => <div>
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Switch>
-          {/* <Route exact path="/" component={Home} /> */}
-          <Route path={`${match.path}/:id`} render={routerProps => <RenderChatRoom routerProperties={routerProps} currentUser={loggedInUser} />} />
+          <Route path={`${match.path}/:id`} render={(routerProps: RouteProps) => <RenderChatRoom routerProperties={routerProps} currentUser={loggedInUser} />} />
         </Switch>
       </main>
     </div>

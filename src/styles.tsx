@@ -8,23 +8,20 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: 'flex',
     },
-    appBar: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-    },
     drawer: {
       width: drawerWidth,
       flexShrink: 0,
     },
     drawerPaper: {
       width: drawerWidth,
+      background: theme.palette.primary.main,
+      color: theme.palette.getContrastText(theme.palette.primary.main)
     },
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
     content: {
       flexGrow: 1,
       backgroundColor: theme.palette.background.default,
-      // padding: theme.spacing(3),
     },
   }),
 );

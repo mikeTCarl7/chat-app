@@ -24,7 +24,7 @@ function createLightTheme(): Theme {
             action: {
                 hover: "rgba(0, 0, 0, .04)",
                 hoverOpacity: 0.04,
-                selected: "rgba(0, 0, 0, .08)",
+                selected: "rgba(0, 0, 0, .2)",
                 disabledBackground: "rgba(0, 0, 0, .12)",
                 disabled: "rgba(0, 0, 0, .26)",
             },
