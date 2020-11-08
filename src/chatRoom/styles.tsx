@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         flexDirection: "row",
         alignItems: "center",
         boxShadow: theme.shadows[3],
+        background: theme.palette.background.paper,
     },
     messageList: {
         marginTop: theme.spacing(6),

@@ -126,7 +126,6 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
                 })}
             </List> */}
             <Messages messages={messages} currentUser={currentUser} />
-
             <div className={classes.footer}>
                 <div className={classes.messageInputWrapper}>
                     <TextField
@@ -142,6 +141,7 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
             </Button>
                 </div>
             </div>
+
         </div>
     )
 }
