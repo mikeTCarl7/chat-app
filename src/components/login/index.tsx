@@ -27,7 +27,6 @@ const Login = () => {
         value={userName}
         variant={"outlined"}
         onChange={handleUserNameChange}
-        // onKeyDown={handlePressKey}
         placeholder="Type your name..."
         required={true}
         fullWidth={true}

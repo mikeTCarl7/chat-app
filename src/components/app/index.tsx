@@ -28,7 +28,9 @@ const App = ({ match }: Props) => {
   const location = useLocation();
 
   const getRooms = async () => {
-    const rooms = await axios.get(`/rooms`); // TODO romove axios : no need for axios as we don't need support of older browsers and we aren't concerned with setting timeout params and things of that nature
+    // TODO: Remove axios : no need for axios as we don't need support of older browsers
+    //  and we aren't concerned with setting timeout params and things of that nature.
+    const rooms = await axios.get(`/rooms`); 
     setRooms(rooms.data);
   };
 
@@ -95,7 +97,9 @@ const App = ({ match }: Props) => {
         <Divider classes={{ root: classes.divider }} />
         <List>
           {rooms.map((room: Room) => {
-            const { id, name } = room; // TODO come up with a more elegant way of handling this path comparison as this way is bug prone
+
+            const { id, name } = room; 
+            // TODO come up with a more elegant way of handling this path comparison as this way is bug prone.
             return (
               <ListItem
                 component={Link}

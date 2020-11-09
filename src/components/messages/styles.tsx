@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(6),
       overflow: "scroll",
       scrollBehavior: "smooth",
-      overflowX: "hidden", // Hide horizontal scrollbar
+      overflowX: "hidden", // Hide scrollbars
       overflowY: "hidden",
     },
     message: {
