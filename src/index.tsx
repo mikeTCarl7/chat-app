@@ -46,7 +46,7 @@ const Login = () => {
 
 
   const handleSetUserName = (e) => {
-    sessionStorage.setItem('userName', userName);
+    sessionStorage.setItem('user', JSON.stringify({userName : userName, loginTime: new Date().getTime()}));
   }
 
 

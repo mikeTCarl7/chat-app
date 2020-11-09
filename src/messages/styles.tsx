@@ -5,11 +5,14 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         marginTop: theme.spacing(6),
         overflow: "scroll",
         scrollBehavior: "smooth",
+        overflowX: "hidden", // Hide horizontal scrollbar
+        overflowY: "hidden",
     },
     message: {
         flexGrow: 0,
         padding: theme.spacing(1),
-        borderRadius: theme.shape.borderRadius
+        borderRadius: theme.shape.borderRadius,
+        maxWidth: 500
     },
     myMessage: {
         textAlign: "end",

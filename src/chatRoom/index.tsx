@@ -12,16 +12,17 @@ import Messages from "../messages"
 
 interface Props {
     routerProperties: any,
-    currentUser: string
+    currentUser: any
 }
 
-function RenderUsers(users, styles) {
+const Users = ({users, classes, currentUser}) => {
 
-    console.log(users);
+    console.log('users', currentUser);
     return (
-        <div className={styles.users}>
+        <div className={classes.users}>
             {users.map((user) => {
-                return <Typography className={styles.headerItem} variant="h6" noWrap>
+                const isMe = user.name === currentUser.userName;
+                return <Typography className={classNames(classes.user, (isMe? classes.userHighlighted : ''))} variant="h6" noWrap>
                     {user}
                 </Typography>
             })}
@@ -50,7 +51,7 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
         const response = await axios.get(`/rooms/${id.id}`);
         setRoomDetails(response.data);
         console.log('messages', response.data);
-    }
+    }    
 
 
 
@@ -58,6 +59,7 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
         let isMounted = true; // note this flag denote mount status
         getRoomDetails();
         getMessages();// TODO figure out if this is fireing all thetime
+        console.log('USER', currentUser);
         var timer = setInterval(()=> getMessages(), 1000);
 
         return () => { clearInterval(timer); timer=null; isMounted = false }; // unmount
@@ -74,7 +76,7 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: currentUser, message: newMessage })
+            body: JSON.stringify({ name: currentUser.userName, message: newMessage })
         };
         await fetch(`/rooms/${id.id}/messages`, requestOptions).then(() => getMessages()).then(() => getRoomDetails());
         // scrollToBottom();
@@ -101,7 +103,7 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
                     <Typography className={classes.headerItem} variant="h5" noWrap>
                         {roomDetails.name}
                     </Typography>
-                    {RenderUsers(roomDetails.users, classes)}
+                    <Users users={roomDetails.users} currentUser={currentUser} classes={classes} />
                 </Toolbar>
             </AppBar>
             {/* <List className={classes.messageList}>

@@ -17,6 +17,13 @@ const useStyles = makeStyles((theme: Theme) =>
       background: theme.palette.primary.main,
       color: theme.palette.getContrastText(theme.palette.primary.main)
     },
+    divider : {
+        margin: [[theme.spacing(3), 0]]
+        // margin: 
+    },
+    drawerUserProfile: {
+        padding: theme.spacing(3)
+    },
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
     content: {

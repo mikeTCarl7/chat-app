@@ -6,6 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Typography from "@material-ui/core/Typography";
 import RenderChatRoom from './chatRoom';
 import useStyles from './styles';
 import { useLocation } from 'react-router-dom'
@@ -23,10 +24,10 @@ const Home = () => <div>
 </div>
 
 
- const PermanentDrawerLeft = ({match}) => {
+const PermanentDrawerLeft = ({ match }) => {
   const classes = useStyles({});
   const [rooms, setRooms] = useState([]);
-  const userName = sessionStorage.getItem('userName')
+  const userName = sessionStorage.getItem('user')
   const [loggedInUser, setLoggedInUser] = useState(userName);
   const location = useLocation();
 
@@ -39,18 +40,25 @@ const Home = () => <div>
   // Get chatRooms on load
   useEffect(() => {
     // console.log('called useEffect')
-    setLoggedInUser(sessionStorage.getItem('userName'));
+    setLoggedInUser(JSON.parse(sessionStorage.getItem('user')));
     console.log(loggedInUser);
     getRooms();
   }, []);
-//  const handleRouteClick = (e)=>{
-//    const location = useLocation();
-//    setLocation(location);
-//  }
 
-if (!rooms) {
-  return <div>Something went wrong</div>;
-}
+
+
+  const computeTimeOnline = (start: Date, end: Date)=>{
+    debugger
+    const msDifference = start.getTime() - end.getTime();
+    const dateDifference = new Date(msDifference);
+    return {hours: dateDifference.getHours(), minutes: dateDifference.getMinutes}
+    
+  }
+
+
+  if (!rooms || !loggedInUser) {
+    return <div>Something went wrong</div>;
+  }
 
   return (
     <div className={classes.root}>
@@ -63,22 +71,29 @@ if (!rooms) {
         }}
         anchor="left"
       >
-        <div className={classes.toolbar} />
-        <Divider />
-        <div>
-          <List>
-            {rooms.map((room: any) => {
-              console.log('room: ', room.name);
-              console.log('id: ', room.id);
 
-              console.log('location/path/:id ', location.pathname.split('/')[2])
-              const { id, name } = room; // TODO come up with a more elegant way of handling this path comparison
-              return <ListItem component={Link} selected={location.pathname.split('/')[2]==id} to={`${match.url}/${id}`} button key={id}>
-                <ListItemText primary={name} />
-              </ListItem>
-            })}
-          </List>
-        </div>
+        <Typography classes={{ root: classes.drawerUserProfile }} variant="h5" noWrap>
+          {loggedInUser ? loggedInUser.userName : null}
+        </Typography>
+        <Typography classes={{ root: classes.drawerUserProfile }} variant="h5" noWrap>
+          {/* {loggedInUser ? computeTimeOnline(loggedInUser.loginTime, new Date().getTime()).minutes : null} */}
+        </Typography>
+
+        <Divider classes={{ root: classes.divider }} />
+
+        <List>
+          {rooms.map((room: any) => {
+            console.log('room: ', room.name);
+            console.log('id: ', room.id);
+
+            console.log('location/path/:id ', location.pathname.split('/')[2])
+            const { id, name } = room; // TODO come up with a more elegant way of handling this path comparison
+            return <ListItem component={Link} selected={location.pathname.split('/')[2] == id} to={`${match.url}/${id}`} button key={id}>
+              <ListItemText primary={name} />
+            </ListItem>
+          })}
+        </List>
+
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />

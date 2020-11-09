@@ -54,9 +54,13 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     users: {
         display: "flex",
         flexDirection: "row",
+
     },
-    headerItem: {
+    user: {
         margin: theme.spacing(1),
+    },
+    userHiglighted: {
+        color: theme.palette.primary.main,
     },
     message: {
         flexGrow: 0,
