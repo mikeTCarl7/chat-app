@@ -47,12 +47,14 @@ const PermanentDrawerLeft = ({ match }) => {
 
 
 
-  const computeTimeOnline = (start: Date, end: Date)=>{
+  function computeTimeOnline(start: number, end: number) {
     debugger
-    const msDifference = start.getTime() - end.getTime();
-    const dateDifference = new Date(msDifference);
-    return {hours: dateDifference.getHours(), minutes: dateDifference.getMinutes}
-    
+    const msDifference = end - start;
+    // const dateDifference = new Date(msDifference);
+    const secondDifference = (msDifference) / 1000
+
+    const minutes = Math.floor((secondDifference % 3600) / 60)
+    return `Online for ${minutes} minutes`
   }
 
 
@@ -71,13 +73,15 @@ const PermanentDrawerLeft = ({ match }) => {
         }}
         anchor="left"
       >
+        <div className={classes.drawerUserProfile}>
 
-        <Typography classes={{ root: classes.drawerUserProfile }} variant="h5" noWrap>
-          {loggedInUser ? loggedInUser.userName : null}
-        </Typography>
-        <Typography classes={{ root: classes.drawerUserProfile }} variant="h5" noWrap>
-          {/* {loggedInUser ? computeTimeOnline(loggedInUser.loginTime, new Date().getTime()).minutes : null} */}
-        </Typography>
+          <Typography variant="h5" noWrap>
+            {loggedInUser ? loggedInUser.userName : null}
+          </Typography>
+          <Typography variant="subtitle1" noWrap>
+            {loggedInUser ? computeTimeOnline(loggedInUser.loginTime, new Date().getTime()) : null}
+          </Typography>
+        </div>
 
         <Divider classes={{ root: classes.divider }} />
 

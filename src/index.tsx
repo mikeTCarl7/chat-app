@@ -31,7 +31,7 @@ const Login = () => {
   const classes = useStyles();
   const [userName, setNewUserName] = useState(""); // Message to send
 
-
+  
 
 
   const handleUserNameChange = (e) => {
@@ -45,12 +45,9 @@ const Login = () => {
 
 
 
-  const handleSetUserName = (e) => {
+  const handleSetUserName = () => {
     sessionStorage.setItem('user', JSON.stringify({userName : userName, loginTime: new Date().getTime()}));
   }
-
-
-
 
   return (
 

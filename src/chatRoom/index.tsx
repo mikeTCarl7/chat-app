@@ -15,16 +15,26 @@ interface Props {
     currentUser: any
 }
 
-const Users = ({users, classes, currentUser}) => {
+const Users = ({ users, classes, currentUser }) => {
 
     console.log('users', currentUser);
     return (
         <div className={classes.users}>
             {users.map((user) => {
-                const isMe = user.name === currentUser.userName;
-                return <Typography className={classNames(classes.user, (isMe? classes.userHighlighted : ''))} variant="h6" noWrap>
+                const isMe = user === currentUser.userName;
+                console.log(isMe);  
+
+                return  <Typography className={classNames(classes.user, isMe ? classes.userHiglighted : '')} variant="h6" noWrap>
                     {user}
                 </Typography>
+                
+                // isMe ? 
+                //  : <Typography className={classNames(classes.user)} variant="h6" noWrap>
+                //         {user}
+                //     </Typography>
+
+
+                
             })}
         </div>
     )
@@ -39,11 +49,19 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
 
     const { match: { params: id } } = routerProperties;
     const getMessages = async () => {
+        console.log('message lenght outside: ', messages.length);
         // consider using fetch instead
-        const response = await axios.get(`/rooms/${id.id}/messages`);
-        console.log(response.data);
-        setMessages(response.data);
-        console.log('messages', response.data);
+        await fetch(`/rooms/${id.id}/messages`).then(response => response.json()).then(data => {
+            console.log('message length inside: ', messages.length);
+            const noNewMessages = messages.length == data.length;
+            console.log('NO NEW MESSAGES: ', noNewMessages)
+            if (noNewMessages) {
+                return;
+            }
+            // messages = null;
+            console.log('SET MESSAGES GOT CALLED')
+            setMessages(data);
+        });
     }
 
     const getRoomDetails = async () => {
@@ -51,18 +69,18 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
         const response = await axios.get(`/rooms/${id.id}`);
         setRoomDetails(response.data);
         console.log('messages', response.data);
-    }    
+    }
 
 
 
     useEffect(() => {
         let isMounted = true; // note this flag denote mount status
         getRoomDetails();
-        getMessages();// TODO figure out if this is fireing all thetime
+        // getMessages();// TODO figure out if this is fireing all thetime
         console.log('USER', currentUser);
-        var timer = setInterval(()=> getMessages(), 1000);
+        var timer = setInterval(() => getMessages(), 1000);
 
-        return () => { clearInterval(timer); timer=null; isMounted = false }; // unmount
+        return () => { clearInterval(timer); timer = null; isMounted = false }; // unmount
     }, [routerProperties]);
 
 
@@ -78,7 +96,8 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name: currentUser.userName, message: newMessage })
         };
-        await fetch(`/rooms/${id.id}/messages`, requestOptions).then(() => getMessages()).then(() => getRoomDetails());
+        await fetch(`/rooms/${id.id}/messages`, requestOptions).then(() => getMessages())
+
         // scrollToBottom();
     }
 
@@ -96,7 +115,7 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
         // <div className={classes.root}>
         <div className={classes.root}>
 
-        
+
             <AppBar position="fixed" className={classes.appBar}>
                 {/* TODO remove tool bar SEPORATOR */}
                 <Toolbar className={classes.toolbar} classes={{ root: classes.toolbarSeparator }}>
