@@ -22,18 +22,15 @@ const Messages = ({ messages, currentUser }: Props) => {
         messagesEndRef && messagesEndRef.current.scrollIntoView();
     }
     useEffect(()=>{
-        console.log('SCROLL TO BOTTOM')
         scrollToBottom()
     }, [messages]);
 
 
-    console.log('currentUser ', currentUser);
     return (
         <>
             <List className={classes.root}>
                 {messages.map((item) => {
                     const isMyMessage = item.name === currentUser.userName;
-                    console.log(isMyMessage)
                     return <ListItem id="messageList" key={item.id}>
                         <ListItemText className={classNames(isMyMessage ? classes.myMessage : classes.otherMessage, classes.message)} primary={item.message} secondary={isMyMessage ? null : item.name}/>
                         

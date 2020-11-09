@@ -1,5 +1,5 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import { drawerWidth } from '../styles';
+import { drawerWidth } from '../app/styles';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
@@ -13,8 +13,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         alignItems: "center",
         background: theme.palette.background.paper,
         color: theme.palette.getContrastText(theme.palette.background.default)
-
-        // padding: theme.spacing(3)
     },
     footer: {
         position: "fixed",
@@ -23,7 +21,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         clear: "both"
     },
     messageInput: {
-        // flexDirection: "column",
         flexGrow: 3,
         margin: theme.spacing(2),
     },
@@ -41,11 +38,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         scrollBehavior: "smooth",
     },
     sendButton: {
-        // flexDirection: "column",
         padding: theme.spacing(2),
         margin: theme.spacing(3)
     },
-    // needed for chat content to be below bar
     toolbarSeparator: theme.mixins.toolbar,
     toolbar: {
         flexDirection: "column",

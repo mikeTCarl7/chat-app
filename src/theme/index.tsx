@@ -5,14 +5,10 @@ function createLightTheme(): Theme {
         palette: {
             primary: {
                 main: "rgba(235,23,1)",
-                dark: "rgba(0, 52, 184)",
-                light: "rgba(235,23,1, .5)",
+                dark: "rgba(183, 19, 1)",
+                light: "rgba(254,109,93, .5)",
             },
-            secondary: {
-                main: "rgba(98, 8, 168)",
-                dark: "rgba(71, 5, 123)",
-                light: "rgba(98, 8, 168, .5)",
-            },
+
             error: { main: "rgba(255, 68, 68)" },
             warning: { main: "rgba(244, 147, 2)" },
             success: { main: "rgba(1, 255, 144)" },
@@ -29,16 +25,6 @@ function createLightTheme(): Theme {
                 disabled: "rgba(0, 0, 0, .26)",
             },
             type: "light",
-        },
-        breakpoints: {
-            keys: ["xs", "sm", "md", "lg", "xl"],
-            values: {
-                xs: null,
-                sm: null,
-                md: null,
-                lg: null,
-                xl: null,
-            },
         },
         shape: {
             borderRadius: 8,
