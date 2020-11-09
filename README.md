@@ -6,8 +6,8 @@
 * UnZip Folder
 * Open up your terminal in the project root dir
 * `npm i`
-* `npm run api-server`
-* Open a new tab in your terminal and run `npm start`
+* `npm start`
+* Open a new tab in your terminal and run `npm run api-server`
 * Go to localhost:3000 in your browser to use the app
 
 ## Some notes:
