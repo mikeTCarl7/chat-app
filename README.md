@@ -1,4 +1,21 @@
-# DoorDash Frontend Interview Project
+# Mike Carl's Frontend Interview Project
+
+## Running the Project
+Make sure you have a recent version of `node` installed to run this project on your local machine.
+
+### 1. UnZip Folder
+### 2. Open up your terminal in the project root dir
+### 3. `npm i`
+### 4. `npm start`
+### 4. Open a new tab in your terminal and run `npm run api-server`
+### 5. Go to localhost:3000 in your browser to use the app
+
+## Some notes:
+This project does allow multiple users to chat with each other in real time. Open up a separate tab to `localhost:3000` to test this functionality
+
+# Assignment Details
+
+## DoorDash Frontend Interview Project
 * TLDR: *Build a chat app with real APIs*
 * Time: *3hr - 6hrs*
 * Allowed tools & frameworks: *anything*
