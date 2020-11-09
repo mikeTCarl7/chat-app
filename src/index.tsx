@@ -1,17 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "./index.css";
+import App from "./components/app";
+import { MuiThemeProvider } from "@material-ui/core";
+
+import { StylesProvider } from "@material-ui/styles";
+
+import Login from "./components/login";
+import theme from "./theme";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <StylesProvider injectFirst>
+      <Router>
+        <MuiThemeProvider theme={theme}>
+          <Switch>
+            <Route path="/rooms" component={App}></Route>
+            {/* TODO also wire up the history so that users can go back */}
+            {/* // TODO route user to Login only if they are not already stored in the session storage */}
+            <Route exact path="/" component={Login} />
+          </Switch>
+        </MuiThemeProvider>
+      </Router>
+    </StylesProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

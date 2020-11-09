@@ -21,7 +21,7 @@ router.use(function(req, res, next) {
 router.use(function(req, res, next) {
     console.log('\nReceived:',{url: req.originalUrl, body: req.body, query: req.query})
     next()
-})
+});
 
 // Simple in memory database
 const database = [
