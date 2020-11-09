@@ -3,7 +3,7 @@
 ## Running the Project
 * Make sure you have a recent version of `node` installed to run this project on your local machine.
 
-* UnZip Folder
+* Unzip folder
 * Open up your terminal in the project root dir
 * `npm i`
 * `npm start`
