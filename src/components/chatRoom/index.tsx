@@ -3,7 +3,7 @@ import axios from "axios";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { TextField, Button } from "@material-ui/core"; //SEE IF THIS IS OVER IMPORTING
+import { TextField, Button } from "@material-ui/core"; 
 import useStyles from "./styles";
 import { Me, RoomDetails } from "../../shared/types";
 import Messages from "../messages/index";
@@ -14,6 +14,8 @@ interface Props {
   currentUser: Me;
 }
 
+// This component contains everything that has to do with the chat room such as.
+// The users in the room, the room name, chat messages, message input form, etc.  
 const ChatRoom = ({ routerProperties, currentUser }: Props) => {
   const classes = useStyles({});
   const [messages, setMessages] = useState([]);
@@ -39,7 +41,7 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
   };
 
   const getRoomDetails = async () => {
-    // TODO consider using fetch instead als destructure that ID better
+    // TODO consider using fetch instead. Also destructure that ID better
 
     const response = await axios.get(`/rooms/${id.id}`);
     setRoomDetails(response.data);

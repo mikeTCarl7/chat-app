@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TextField, Button } from "@material-ui/core";
 import useStyles from "./styles";
+
+// This is the login page.  You will be routed here when going to the root path of the site.
 const Login = () => {
   const joinButtonContent = "Join The DoorDash Chat!"; // Ideally this would be driven by a service
   const classes = useStyles();

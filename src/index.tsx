@@ -17,6 +17,8 @@ ReactDOM.render(
         <MuiThemeProvider theme={theme}>
           <Switch>
             <Route path="/rooms" component={App}></Route>
+            {/* TODO also wire up the history so that users can go back */}
+            {/* // TODO route user to Login only if they are not already stored in the session storage */}
             <Route exact path="/" component={Login} />
           </Switch>
         </MuiThemeProvider>

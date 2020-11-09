@@ -8,7 +8,7 @@ interface Props {
   messages: PostedMessage[];
   currentUser: Me;
 }
-
+// Renders messages in the chat room.  This component also auto scrolls to the bottom when a new message comes in. 
 const Messages = ({ messages, currentUser }: Props) => {
   const classes = useStyles({});
   const messagesEndRef = useRef(null);

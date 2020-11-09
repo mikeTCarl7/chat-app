@@ -18,7 +18,8 @@ interface Props {
   match: match;
 }
 
-const PermanentDrawerLeft = ({ match }: Props) => {
+// This Component contains the left panel and the router links to the various chat rooms
+const App = ({ match }: Props) => {
   const classes = useStyles({});
   const [rooms, setRooms] = useState([]);
   const userName = JSON.parse(sessionStorage.getItem("user"));
@@ -35,7 +36,7 @@ const PermanentDrawerLeft = ({ match }: Props) => {
   useEffect(() => {
     if (!loggedInUser) {
       alert(
-        "Something went wrong. Either you are not logged in or an error occurred"
+        `Something went wrong. Either you are not logged in or an error occurred. \n Click 'Ok' to route back to login page`
       );
       // @ts-ignore
       window.location = "/";
@@ -127,4 +128,4 @@ const PermanentDrawerLeft = ({ match }: Props) => {
   );
 };
 
-export default PermanentDrawerLeft;
+export default App;

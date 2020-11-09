@@ -9,6 +9,7 @@ interface Props {
   currentUser: Me;
 }
 
+// Renders the current users in the room.  If the user is you your name will be highlighted. 
 const Users = ({ users, classes, currentUser }: Props) => {
   return (
     <div className={classes.users}>
