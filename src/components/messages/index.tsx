@@ -1,14 +1,16 @@
 import React, { useEffect, useRef } from "react";
-import { List, ListItem, ListItemText } from "@material-ui/core"; 
-import useStyles from "./styles";
-import classNames from "classnames";
+import { List } from "@material-ui/core";
+
+import Message from "../message";
 import { PostedMessage, Me } from "../../shared/types";
+import useStyles from "./styles";
 
 interface Props {
   messages: PostedMessage[];
   currentUser: Me;
 }
-// Renders messages in the chat room.  This component also auto scrolls to the bottom when a new message comes in. 
+
+// Renders messages in the chat room.  This component also auto scrolls to the bottom when a new message comes in.
 const Messages = ({ messages, currentUser }: Props) => {
   const classes = useStyles({});
   const messagesEndRef = useRef(null);
@@ -21,26 +23,13 @@ const Messages = ({ messages, currentUser }: Props) => {
   }, [messages]);
 
   return (
-    <>
-      <List className={classes.root}>
-        {messages.map((item) => {
-          const isMyMessage = item.name === currentUser.userName;
-          return (
-            <ListItem id="messageList" key={item.id}>
-              <ListItemText
-                className={classNames(
-                  isMyMessage ? classes.myMessage : classes.otherMessage,
-                  classes.message
-                )}
-                primary={item.message}
-                secondary={isMyMessage ? null : item.name}
-              />
-            </ListItem>
-          );
-        })}
-        <div style={{ paddingBottom: 120 }} ref={messagesEndRef} />
-      </List>
-    </>
+    <List className={classes.root}>
+      {messages.map((message) => {
+        const { id } = message;
+        return <Message key={id} message={message} currentUser={currentUser} />;
+      })}
+      <div style={{ paddingBottom: 120 }} ref={messagesEndRef} />
+    </List>
   );
 };
 

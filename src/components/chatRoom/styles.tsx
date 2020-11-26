@@ -15,32 +15,11 @@ const useStyles = makeStyles((theme: Theme) =>
       background: theme.palette.background.paper,
       color: theme.palette.getContrastText(theme.palette.background.default),
     },
-    footer: {
-      position: "fixed",
-      width: `calc(100% - ${drawerWidth}px)`,
-      bottom: 0,
-      clear: "both",
-    },
-    messageInput: {
-      flexGrow: 3,
-      margin: theme.spacing(2),
-    },
-    messageInputWrapper: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      boxShadow: theme.shadows[3],
-      background: theme.palette.background.paper,
-    },
     messageList: {
       marginTop: theme.spacing(6),
       maxHeight: 1100,
       overflow: "scroll",
       scrollBehavior: "smooth",
-    },
-    sendButton: {
-      padding: theme.spacing(2),
-      margin: theme.spacing(3),
     },
     toolbarSeparator: theme.mixins.toolbar,
     toolbar: {

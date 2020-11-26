@@ -8,7 +8,7 @@ import { MuiThemeProvider } from "@material-ui/core";
 import { StylesProvider } from "@material-ui/styles";
 
 import Login from "./components/login";
-import theme from "./theme";
+import theme from "./shared/theme";
 
 ReactDOM.render(
   <React.StrictMode>

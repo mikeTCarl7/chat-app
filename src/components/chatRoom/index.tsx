@@ -3,11 +3,11 @@ import axios from "axios";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { TextField, Button } from "@material-ui/core"; 
 import useStyles from "./styles";
 import { Me, RoomDetails } from "../../shared/types";
 import Messages from "../messages/index";
 import Users from "../users/index";
+import BottomPanel from "../bottomPanel";
 
 interface Props {
   routerProperties: any;
@@ -15,7 +15,7 @@ interface Props {
 }
 
 // This component contains everything that has to do with the chat room such as.
-// The users in the room, the room name, chat messages, message input form, etc.  
+// The users in the room, the room name, chat messages, message input form, etc.
 const ChatRoom = ({ routerProperties, currentUser }: Props) => {
   const classes = useStyles({});
   const [messages, setMessages] = useState([]);
@@ -32,8 +32,8 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
     await fetch(`/rooms/${id.id}/messages`)
       .then((response) => response.json())
       .then((data) => {
-        const noNewMessages = messagesRef.current.length === data.length;
-        if (noNewMessages) {
+        const messagesChanged = JSON.stringify(messagesRef.current) !== JSON.stringify(data);
+        if (!messagesChanged) {
           return;
         }
         setMessages(data);
@@ -60,12 +60,12 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
       timer = null;
     }; // unmount
   }, [routerProperties]);
-  
+
   const handleMessageChange = (e) => {
     setNewMessage(e.target.value);
   };
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = async (newMessage: string) => {
     // send message
     setNewMessage("");
     const requestOptions = {
@@ -76,13 +76,6 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
     await fetch(`/rooms/${id.id}/messages`, requestOptions)
       .then(() => getMessages())
       .then(() => getRoomDetails());
-  };
-
-  const handlePressKey = (e) => {
-    if (e.keyCode === 13) {
-      // Send message if the key is "ENTER"
-      handleSendMessage();
-    }
   };
 
   if (!messages || !roomDetails) {
@@ -107,27 +100,7 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
         </Toolbar>
       </AppBar>
       <Messages messages={messages} currentUser={currentUser} />
-      <div className={classes.footer}>
-        <div className={classes.messageInputWrapper}>
-          <TextField
-            value={newMessage}
-            variant={"outlined"}
-            onChange={handleMessageChange}
-            onKeyDown={handlePressKey}
-            placeholder="Write message..."
-            className={classes.messageInput}
-          />
-          <Button
-            onClick={handleSendMessage}
-            color={"primary"}
-            variant={"contained"}
-            size={"large"}
-            className={classes.sendButton}
-          >
-            Send
-          </Button>
-        </div>
-      </div>
+      <BottomPanel handleSendMessage={handleSendMessage} />
     </div>
   );
 };
