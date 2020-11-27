@@ -19,9 +19,6 @@ const useStyles = makeStyles((theme: Theme) =>
       background: theme.palette.background.paper,
       color: theme.palette.getContrastText(theme.palette.background.paper),
     },
-    reaction: {
-      background: "blue",
-    },
   })
 );
 

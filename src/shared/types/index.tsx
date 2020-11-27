@@ -6,7 +6,6 @@ export interface Me {
 export interface Message {
   name: string;
   message: string;
-  reaction?: any;
 }
 
 export interface Room {

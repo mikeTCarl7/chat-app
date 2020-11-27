@@ -36,6 +36,7 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
         if (!messagesChanged) {
           return;
         }
+        console.log("setting new messages");
         setMessages(data);
       });
   };
