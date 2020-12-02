@@ -11,7 +11,7 @@ interface Props {
 
 const Message = ({ message, currentUser }: Props) => {
   const classes = useStyles({});
-  const { id, name: sendersName, message: messageText } = message;
+  const { id, name: sendersName, message: messageContent } = message;
   const { userName: myUserName } = currentUser;
   const isMyMessage = sendersName === myUserName;
   return (
@@ -23,7 +23,8 @@ const Message = ({ message, currentUser }: Props) => {
         )}
       >
         <ListItemText
-          primary={messageText}
+          className={classes.messageText}
+          primary={messageContent}
           secondary={isMyMessage ? null : sendersName}
         />
       </div>
