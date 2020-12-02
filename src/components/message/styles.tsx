@@ -3,10 +3,11 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-        padding: theme.spacing(1),
-        borderRadius: theme.shape.borderRadius,
-        maxWidth: 900,
-      },
+      padding: theme.spacing(1),
+      borderRadius: theme.shape.borderRadius,
+      display: "flex",
+      alignItems: "center",
+    },
     myMessage: {
       textAlign: "end",
       marginLeft: "auto",
