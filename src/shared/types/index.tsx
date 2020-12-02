@@ -3,9 +3,10 @@ export interface Me {
   loginTime: number;
 }
 
-export interface Message {
+export interface MessageData {
   name: string;
   message: string;
+  id: string;
 }
 
 export interface Room {
@@ -18,6 +19,6 @@ export interface RoomDetails extends Room {
   users: string[];
 }
 
-export interface PostedMessage extends Message {
+export interface PostedMessage extends MessageData {
   id: string;
 }

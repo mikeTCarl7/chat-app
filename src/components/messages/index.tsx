@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from "react";
 import { List } from "@material-ui/core";
 
 import Message from "../message";
-import { PostedMessage, Me } from "../../shared/types";
+import { Me, MessageData } from "../../shared/types";
 import useStyles from "./styles";
 
 interface Props {
-  messages: PostedMessage[];
+  messages: MessageData[];
   currentUser: Me;
 }
 

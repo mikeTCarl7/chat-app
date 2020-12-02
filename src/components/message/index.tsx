@@ -1,11 +1,11 @@
 import React from "react";
 import classNames from "classnames";
 import { ListItem, ListItemText } from "@material-ui/core";
-import { PostedMessage, Me } from "../../shared/types";
+import { Me, MessageData } from "../../shared/types";
 import useStyles from "./styles";
 
 interface Props {
-  message: PostedMessage;
+  message: MessageData;
   currentUser: Me;
 }
 
