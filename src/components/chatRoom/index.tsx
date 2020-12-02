@@ -22,21 +22,22 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
   const messagesRef = useRef(messages);
 
   const [roomDetails, setRoomDetails] = useState<RoomDetails>();
-  const [newMessage, setNewMessage] = useState(""); // Message to send
 
   const {
-    match: { params: id },
+    match: {
+      params: { id: roomId },
+    },
   } = routerProperties;
   const getMessages = async () => {
     // consider using fetch instead
-    await fetch(`/rooms/${id.id}/messages`)
+    await fetch(`/rooms/${roomId}/messages`)
       .then((response) => response.json())
       .then((data) => {
-        const messagesChanged = JSON.stringify(messagesRef.current) !== JSON.stringify(data);
+        const messagesChanged =
+          JSON.stringify(messagesRef.current) !== JSON.stringify(data);
         if (!messagesChanged) {
           return;
         }
-        console.log("setting new messages");
         setMessages(data);
       });
   };
@@ -44,7 +45,7 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
   const getRoomDetails = async () => {
     // TODO consider using fetch instead. Also destructure that ID better
 
-    const response = await axios.get(`/rooms/${id.id}`);
+    const response = await axios.get(`/rooms/${roomId}`);
     setRoomDetails(response.data);
   };
   useEffect(() => {
@@ -61,23 +62,6 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
       timer = null;
     }; // unmount
   }, [routerProperties]);
-
-  const handleMessageChange = (e) => {
-    setNewMessage(e.target.value);
-  };
-
-  const handleSendMessage = async (newMessage: string) => {
-    // send message
-    setNewMessage("");
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: currentUser.userName, message: newMessage }),
-    };
-    await fetch(`/rooms/${id.id}/messages`, requestOptions)
-      .then(() => getMessages())
-      .then(() => getRoomDetails());
-  };
 
   if (!messages || !roomDetails) {
     return null;
@@ -101,7 +85,11 @@ const ChatRoom = ({ routerProperties, currentUser }: Props) => {
         </Toolbar>
       </AppBar>
       <Messages messages={messages} currentUser={currentUser} />
-      <BottomPanel handleSendMessage={handleSendMessage} />
+      <BottomPanel
+        getRoomDetails={getRoomDetails}
+        currentUser={currentUser}
+        roomId={roomId}
+      />
     </div>
   );
 };

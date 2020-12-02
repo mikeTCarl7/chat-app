@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { Me } from "../../shared/types";
 import { TextField, Button } from "@material-ui/core";
 import useStyles from "./styles";
+
 interface Props {
-  handleSendMessage: (newMessage: string) => Promise<void>;
+  currentUser: Me;
+  roomId: string;
+  getRoomDetails: any;
 }
 
-const BottomPanel = ({ handleSendMessage }: Props) => {
+const BottomPanel = ({ getRoomDetails, roomId, currentUser }: Props) => {
   const classes = useStyles({});
   const [newMessage, setNewMessage] = useState("");
 
@@ -14,10 +17,27 @@ const BottomPanel = ({ handleSendMessage }: Props) => {
     setNewMessage(e.target.value);
   };
 
+  const handleSendMessage = async (
+    newMessage: string,
+    roomId: string,
+    userName: string
+  ) => {
+    // send message
+    setNewMessage("");
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: userName, message: newMessage }),
+    };
+    await fetch(`/rooms/${roomId}/messages`, requestOptions).then(() =>
+      getRoomDetails()
+    );
+  };
+
   const handlePressKey = (e) => {
     if (e.keyCode === 13) {
       // Send message if the key is "ENTER"
-      handleSendMessage(newMessage);
+      handleSendMessage(newMessage, roomId, currentUser.userName);
     }
   };
 
@@ -33,7 +53,9 @@ const BottomPanel = ({ handleSendMessage }: Props) => {
           className={classes.messageInput}
         />
         <Button
-          onClick={()=> handleSendMessage(newMessage)}
+          onClick={() =>
+            handleSendMessage(newMessage, roomId, currentUser.userName)
+          }
           color={"primary"}
           variant={"contained"}
           size={"large"}

@@ -44,7 +44,7 @@ const App = ({ match }: Props) => {
       window.location = "/";
       return;
     }
-    setLoggedInUser(JSON.parse(sessionStorage.getItem("user")));
+    // setLoggedInUser(JSON.parse(sessionStorage.getItem("user")));
     getRooms();
     setTimeOnline(
       computeTimeOnline(
